@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV and Generate Certificates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        form {
+            text-align: center;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 20px auto;
+            font-size: 1em;
+            padding: 10px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+        td {
+            background-color: #f8f9fa;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        tbody tr:hover {
+            background-color: #e2e6ea;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            table {
+                font-size: 0.9em;
+            }
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload CSV to Generate Certificates</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            <button type="submit">Upload and Generate Certificates</button>
+        </form>
+
+        {% if certificates %}
+        <h2>Generated Certificates</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Serial No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Parents Name</th>
+                    <th>Course</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Certificate</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cert in certificates %}
+                <tr>
+                    <td>{{ cert['Serial No'] }}</td>
+                    <td>{{ cert['Name'] }}</td>
+                    <td>{{ cert['email'] }}</td>
+                    <td>{{ cert['Parents Name'] }}</td>
+                    <td>{{ cert['Course'] }}</td>
+                    <td>{{ cert['From'] }}</td>
+                    <td>{{ cert['To'] }}</td>
+                    <td>
+                        <a href="{{ url_for('preview_file', filename=cert['image_path'].split('/')[-1]) }}" target="_blank">Preview</a> |
+                        <a href="{{ url_for('download_file', filename=cert['image_path'].split('/')[-1]) }}" download>Download</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
