@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate Generation Portal</title>
+    <title>Certificate Generation Portal - PrayogBharti Foundation</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #e9ecef;
+            background-color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,42 +17,137 @@
         }
         .container {
             max-width: 600px;
-            padding: 20px;
+            width: 100%;
             background-color: white;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+            box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
             text-align: center;
+            transition: transform 0.3s ease-in-out;
         }
-        h1 {
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        .header {
+            text-align: center;
+            background-color: #ff9800;
+            padding: 20px;
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .header img {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50px;
+        }
+        .header h1 {
+            margin: 0;
             font-size: 2em;
-            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 5px 0;
+            font-size: 1.2em;
+            color: #f2f2f2;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        h2 {
+            font-size: 1.8em;
             color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1em;
+            color: #555;
+            margin-bottom: 30px;
         }
         input[type="file"], input[type="submit"] {
             width: 100%;
             padding: 15px;
-            margin: 10px 0;
+            margin: 15px 0;
             border: none;
-            border-radius: 5px;
-            font-size: 1em;
+            border-radius: 30px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        input[type="file"] {
+            background-color: #f0f0f0;
+            color: #333;
+            cursor: pointer;
+        }
+        input[type="file"]:hover {
+            background-color: #e0e0e0;
         }
         input[type="submit"] {
-            background-color: #28a745;
+            background-color: #4caf50;
             color: white;
+            font-weight: bold;
             cursor: pointer;
         }
         input[type="submit"]:hover {
-            background-color: #218838;
+            background-color: #388e3c;
+        }
+        input[type="submit"]:active {
+            background-color: #2e7d32;
+        }
+        .footer {
+            background-color: #4caf50;
+            padding: 10px;
+            color: white;
+            font-size: 0.9em;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            text-align: center;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 30px;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+            input[type="file"], input[type="submit"] {
+                font-size: 1em;
+                padding: 12px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Generate Your Certificate</h1>
-        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".csv" required>
-            <input type="submit" value="Generate Certificates">
-        </form>
+        <div class="header">
+            <!--<img src="templates/l.png" alt="Company Logo"> Placeholder for logo -->
+            <h1>PrayogBharti Foundation</h1>
+            <p>Empowering the Future</p>
+        </div>
+        <div class="content">
+            <h2>Upload Your CSV File</h2>
+            <p>Select a CSV file to generate personalized certificates for all participants.</p>
+            <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".csv" required>
+                <input type="submit" value="Generate Certificates">
+            </form>
+        </div>
+        <div class="footer">
+            &copy; 2024 <a href="#">PrayogBharti Foundation</a> - All Rights Reserved
+        </div>
     </div>
 </body>
 </html>
+
