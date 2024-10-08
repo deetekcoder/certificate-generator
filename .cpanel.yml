@@ -1,0 +1,6 @@
+version: 2
+deployment:
+  web:
+    document_root: /home4/sakasxin/repositories/cg 
+    user: sakasxin
+    group: sakasxin
