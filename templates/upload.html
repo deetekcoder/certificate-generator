@@ -3,95 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload CSV and Generate Certificates</title>
+    <title>Upload CSV and Generate Certificates - PrayogBharti Foundation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
+            background-color: #ffffff;
+        }
+        .header {
+            background-color: #28a745;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .header img {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            height: 50px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 0;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 40px auto;
-            background: #ffffff;
+            background-color: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         h1 {
             text-align: center;
-            color: #007bff;
+            color: #28a745;
             margin-bottom: 20px;
             font-size: 2.5em;
             font-weight: bold;
         }
+        h2 {
+            color: #ff8c00;
+            font-size: 2em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
         form {
             text-align: center;
+            margin-bottom: 40px;
         }
         input[type="file"] {
             display: block;
             margin: 20px auto;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-size: 1em;
-            padding: 10px;
         }
         button {
-            background-color: #28a745;
+            background-color: #ff8c00;
             color: white;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.1em;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
         button:hover {
-            background-color: #218838;
+            background-color: #e07b00;
             transform: scale(1.05);
         }
         table {
             width: 100%;
-            margin-top: 20px;
+            margin-top: 30px;
             border-collapse: collapse;
         }
         th, td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
             border: 1px solid #dee2e6;
         }
         th {
-            background-color: #007bff;
+            background-color: #28a745;
             color: white;
             font-weight: bold;
         }
         td {
-            background-color: #f8f9fa;
+            background-color: #f9fafb;
         }
         tbody tr:nth-child(odd) {
-            background-color: #f1f1f1;
+            background-color: #f2f2f2;
         }
         tbody tr:hover {
             background-color: #e2e6ea;
         }
         a {
-            color: #007bff;
+            color: #28a745;
             text-decoration: none;
             font-weight: bold;
         }
         a:hover {
             text-decoration: underline;
         }
+        .footer {
+            background-color: #28a745;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .responsive-table-wrapper {
+            overflow-x: auto;
+        }
         @media (max-width: 768px) {
+            h1, h2 {
+                font-size: 1.8em;
+            }
             table {
                 font-size: 0.9em;
             }
             th, td {
-                padding: 8px;
+                padding: 12px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1, h2 {
+                font-size: 1.5em;
+            }
+            input[type="file"], button {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+            th, td {
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header with logo and company name -->
+    <div class="header">
+        <h1>PrayogBharti Foundation</h1>
+    </div>
+
+    <!-- Main container for the content -->
     <div class="container">
         <h1>Upload CSV to Generate Certificates</h1>
         <form action="/upload" method="post" enctype="multipart/form-data">
@@ -99,40 +157,49 @@
             <button type="submit">Upload and Generate Certificates</button>
         </form>
 
+        <!-- Display certificates if available -->
         {% if certificates %}
         <h2>Generated Certificates</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Serial No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Parents Name</th>
-                    <th>Course</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Certificate</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cert in certificates %}
-                <tr>
-                    <td>{{ cert['Serial No'] }}</td>
-                    <td>{{ cert['Name'] }}</td>
-                    <td>{{ cert['email'] }}</td>
-                    <td>{{ cert['Parents Name'] }}</td>
-                    <td>{{ cert['Course'] }}</td>
-                    <td>{{ cert['From'] }}</td>
-                    <td>{{ cert['To'] }}</td>
-                    <td>
-                        <a href="{{ url_for('preview_file', filename=cert['image_path'].split('/')[-1]) }}" target="_blank">Preview</a> |
-                        <a href="{{ url_for('download_file', filename=cert['image_path'].split('/')[-1]) }}" download>Download</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="responsive-table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Serial No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Parents Name</th>
+                        <th>Course</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Certificate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cert in certificates %}
+                    <tr>
+                        <td>{{ cert['Serial No'] }}</td>
+                        <td>{{ cert['Name'] }}</td>
+                        <td>{{ cert['email'] }}</td>
+                        <td>{{ cert['Parents Name'] }}</td>
+                        <td>{{ cert['Course'] }}</td>
+                        <td>{{ cert['From'] }}</td>
+                        <td>{{ cert['To'] }}</td>
+                        <td>
+                            <a href="{{ url_for('preview_file', filename=cert['image_path'].split('/')[-1]) }}" target="_blank">Preview</a> |
+                            <a href="{{ url_for('download_file', filename=cert['image_path'].split('/')[-1]) }}" download>Download</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% endif %}
+    </div>
+
+    <!-- Footer for important information -->
+    <div class="footer">
+        <p>© 2024 PrayogBharti Foundation. All Rights Reserved.</p>
+        <p>Contact Us: info@prayogbharti.org | +91 87430 01414</p>
     </div>
 </body>
 </html>
